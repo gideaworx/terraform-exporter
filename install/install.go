@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -11,6 +12,8 @@ import (
 
 	"github.com/gideaworx/terraform-exporter/runner"
 )
+
+const oneMibiByte = 1048576
 
 func (i *Command) install() error {
 	if i.PluginNative != "" {
@@ -55,18 +58,32 @@ func (i *Command) installFromFileOrURL(loc string, extension string) error {
 
 	defer reader.Close()
 
-	decompressed, err := i.getDecompressedReader(reader)
-	if err != nil {
-		return err
-	}
-	defer decompressed.Close()
-
-	destFile, err := os.OpenFile(filepath.Join(i.pluginHomeDir, i.pluginDir, fmt.Sprintf("export-plugin%s", extension)), os.O_CREATE|os.O_TRUNC, 0o755)
+	destFile, err := os.OpenFile(filepath.Join(i.pluginHomeDir, i.pluginDir, fmt.Sprintf("export-plugin%s", extension)), os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0o755)
 	if err != nil {
 		return err
 	}
 	defer destFile.Close()
 
-	_, err = io.Copy(destFile, decompressed)
-	return err
+	totalRead := 0
+	for {
+		buf := make([]byte, oneMibiByte)
+
+		read, err := reader.Read(buf)
+		if err != nil && err != io.EOF {
+			return err
+		}
+
+		totalRead += read
+		destFile.Write(buf)
+
+		if read < oneMibiByte {
+			break
+		}
+	}
+
+	destFile.Sync()
+
+	log.Printf("Read %d bytes", totalRead)
+
+	return nil
 }

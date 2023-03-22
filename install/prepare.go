@@ -39,7 +39,7 @@ func (i *Command) prepare() error {
 		return err
 	}
 
-	if info.IsDir() {
+	if info != nil && info.IsDir() {
 		return fmt.Errorf("there is already a plugin called %q installed. Use the update command instead", bom.Name)
 	}
 

@@ -4,12 +4,14 @@ import (
 	"io"
 
 	"github.com/alecthomas/kong"
+	"github.com/gideaworx/terraform-exporter/export"
 	"github.com/gideaworx/terraform-exporter/help"
 	"github.com/gideaworx/terraform-exporter/install"
 	"github.com/gideaworx/terraform-exporter/list"
 )
 
 var cli struct {
+	Export        *export.Command            `cmd:"" help:"Export data to terraform files"`
 	InstallPlugin *install.Command           `cmd:"" help:"Install a plugin"`
 	Help          *help.Command              `cmd:"" help:"Show help for a plugin's exporter command"`
 	ListPlugins   *list.ListPluginsCommand   `cmd:"" help:"List installed plugins"`

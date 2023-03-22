@@ -11,6 +11,7 @@ import (
 
 	"github.com/BurntSushi/toml"
 	"github.com/gideaworx/terraform-exporter-plugin/go-plugin"
+	"github.com/hashicorp/go-hclog"
 	goplug "github.com/hashicorp/go-plugin"
 )
 
@@ -85,11 +86,17 @@ func PluginHome() (string, error) {
 	}
 
 	info, err := os.Stat(home)
-	if err != nil && !os.IsNotExist(err) {
-		return "", fmt.Errorf("could not read plugin directory: %w", err)
+	if err != nil {
+		if !os.IsNotExist(err) {
+			return "", fmt.Errorf("could not read plugin directory: %w", err)
+		}
+
+		if err = os.MkdirAll(home, 0o777); err != nil {
+			return "", err
+		}
 	}
 
-	if !info.IsDir() {
+	if info != nil && !info.IsDir() {
 		return "", fmt.Errorf("%q is not a directory", home)
 	}
 
@@ -137,6 +144,11 @@ func LoadPlugin(pluginName string, integrity *PluginIntegrity) (PluginDefinition
 		VersionedPlugins: pluginMap,
 		Cmd:              exec.Command(executable),
 		SecureConfig:     sc,
+		Logger: hclog.New(&hclog.LoggerOptions{
+			Name:   "plugin",
+			Level:  hclog.Debug,
+			Output: os.Stdout,
+		}),
 	})
 
 	c, err := client.Client()

@@ -52,12 +52,14 @@ func (c *Command) Run(ctx *kong.Context) error {
 		return err
 	}
 
-	response, err := impl.Export(matching[0][1], plugin.ExportRequest{
-		OutputDirectory:    c.OutputDirectory,
-		SkipProviderOutput: c.SkipProviderOutput,
-		PluginArgs:         c.CommandArgs,
+	response, err := impl.Export(plugin.ExportPluginRequest{
+		Name: matching[0][1],
+		Request: plugin.ExportCommandRequest{
+			OutputDirectory:    c.OutputDirectory,
+			SkipProviderOutput: c.SkipProviderOutput,
+			PluginArgs:         c.CommandArgs,
+		},
 	})
-
 	if err != nil {
 		return err
 	}
