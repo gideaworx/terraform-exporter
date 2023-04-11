@@ -37,16 +37,16 @@ func (l *ListAvailablePlugins) Run(ctx *kong.Context) error {
 		return err
 	}
 
-	for i := range registry.RegistryInfo {
-		sort.Slice(registry.RegistryInfo[i].Versions, func(a, b int) bool {
-			sa, _ := semver.ParseTolerant(registry.RegistryInfo[i].Versions[a].Version)
-			sb, _ := semver.ParseTolerant(registry.RegistryInfo[i].Versions[b].Version)
+	for i := range registry.Plugins {
+		sort.Slice(registry.Plugins[i].Versions, func(a, b int) bool {
+			sa, _ := semver.ParseTolerant(registry.Plugins[i].Versions[a].Version)
+			sb, _ := semver.ParseTolerant(registry.Plugins[i].Versions[b].Version)
 			return sa.GT(sb)
 		})
 	}
 
-	sort.Slice(registry.RegistryInfo, func(i, j int) bool {
-		return registry.RegistryInfo[i].Name < registry.RegistryInfo[j].Name
+	sort.Slice(registry.Plugins, func(i, j int) bool {
+		return registry.Plugins[i].Name < registry.Plugins[j].Name
 	})
 
 	headers := []string{"Name", "Description", "Latest Version"}
@@ -74,7 +74,7 @@ func (l *ListAvailablePlugins) Run(ctx *kong.Context) error {
 	table.SetHeaderColor(headerColors...)
 	table.SetColumnColor(columnColors...)
 
-	for _, plugin := range registry.RegistryInfo {
+	for _, plugin := range registry.Plugins {
 		if !l.exclude(plugin) {
 			row := []string{plugin.Name, plugin.Description, plugin.Versions[0].Version}
 			if !l.ExcludeInstalled {

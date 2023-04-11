@@ -16,8 +16,8 @@ import (
 )
 
 type PluginRegistry struct {
-	URL          *url.URL          `yaml:",inline"`
-	RegistryInfo []registry.Plugin `yaml:"-"`
+	URL     *url.URL          `yaml:",inline"`
+	Plugins []registry.Plugin `yaml:"-"`
 }
 
 func (r *PluginRegistry) Clone() *PluginRegistry {
@@ -27,14 +27,14 @@ func (r *PluginRegistry) Clone() *PluginRegistry {
 
 	cloned := new(PluginRegistry)
 	cloned.URL = r.URL.JoinPath("")
-	cloned.RegistryInfo = make([]registry.Plugin, len(r.RegistryInfo))
-	copy(cloned.RegistryInfo, r.RegistryInfo)
+	cloned.Plugins = make([]registry.Plugin, len(r.Plugins))
+	copy(cloned.Plugins, r.Plugins)
 
 	return cloned
 }
 
 func (r *PluginRegistry) LazyLoad() error {
-	if len(r.RegistryInfo) > 0 {
+	if len(r.Plugins) > 0 {
 		return nil
 	}
 	hc := runner.GetHTTPClient()
@@ -54,7 +54,7 @@ func (r *PluginRegistry) LazyLoad() error {
 		return err
 	}
 
-	r.RegistryInfo = fullRegistry.Plugins
+	r.Plugins = fullRegistry.Plugins
 	return nil
 }
 

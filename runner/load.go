@@ -153,12 +153,12 @@ func LoadPlugin(pluginName string, integrity *PluginIntegrity) (PluginDefinition
 
 	c, err := client.Client()
 	if err != nil {
-		return PluginDefinition{}, err
+		return PluginDefinition{}, fmt.Errorf("error creating plugin client: %w", err)
 	}
 
 	raw, err := c.Dispense("plugin")
 	if err != nil {
-		return PluginDefinition{}, err
+		return PluginDefinition{}, fmt.Errorf("error loading plugin: %w", err)
 	}
 
 	ep, ok := raw.(plugin.ExportPlugin)

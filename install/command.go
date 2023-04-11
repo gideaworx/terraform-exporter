@@ -7,21 +7,22 @@ import (
 	"strings"
 
 	"github.com/alecthomas/kong"
+	"github.com/gideaworx/terraform-exporter/registry"
 	"github.com/gideaworx/terraform-exporter/runner"
 )
 
 var ErrPluginAlreadyInstalled = errors.New("plugin already installed")
 
 type Command struct {
-	PluginNative  string    `short:"f" required:"true" xor:"source" help:"An executable file. Can be from the file system or a URL."`
-	PluginJAR     string    `short:"j" required:"true" xor:"source" help:"An archive that be run via 'java -jar'. Can be from the file system or a URL."`
-	PluginNodeJS  string    `short:"n" required:"true" xor:"source" help:"The name of a NodeJS module to download via NPM. Node and npm must be installed. A version may be specified by specifying 'module@version'"`
-	PluginPython  string    `short:"p" required:"true" xor:"source" help:"The name of a Python module to download via pip. Python v3+ and pip must be installed. A version may be specified by specifying 'module==version'"`
-	pluginHomeDir string    `kong:"-"`
-	pluginDir     string    `kong:"-"`
-	out           io.Writer `kong:"-"`
-	err           io.Writer `kong:"-"`
-	in            io.Reader `kong:"-"`
+	LocalFile     bool                       `short:"f" help:"If true, treat the plugin-name arg as the path to a local file"`
+	Registry      string                     `short:"r" default:"default" help:"The name of the registry to install the plugin from"`
+	PluginVersion string                     `short:"v" default:"latest" help:"The version to install from the registry. Ignored if --local-file is set"`
+	PluginName    string                     `arg:"" help:"The name of the plugin to install if --registry is true, or the path to the executable plugin if --local-file is set"`
+	pluginHomeDir string                     `kong:"-"`
+	out           io.Writer                  `kong:"-"`
+	err           io.Writer                  `kong:"-"`
+	in            io.Reader                  `kong:"-"`
+	r             *registry.PluginRegistries `kong:"-"`
 }
 
 func (i *Command) BeforeApply(ctx *kong.Context) error {
@@ -30,7 +31,10 @@ func (i *Command) BeforeApply(ctx *kong.Context) error {
 
 	i.in = strings.NewReader("")
 
-	return nil
+	var err error
+	i.r, err = registry.LoadFromDisk()
+
+	return err
 }
 
 func (i *Command) Run() error {
@@ -40,41 +44,11 @@ func (i *Command) Run() error {
 	}
 	i.pluginHomeDir = pluginHome
 
-	fmt.Fprintf(i.out, "Installing %s\n\n", i.pluginDisplay())
-	fmt.Fprintf(i.out, "Preparing installation ...\n")
-	if err := i.prepare(); err != nil {
-		return fmt.Errorf("could not prepare plugin: %w", err)
+	fmt.Fprintf(i.out, "Installing %s\n\n", i.PluginName)
+
+	if i.LocalFile {
+		return i.localInstall()
 	}
 
-	fmt.Fprintf(i.out, "\nInstalling ...\n")
-	if err := i.install(); err != nil {
-		return fmt.Errorf("could not install plugin: %w", err)
-	}
-
-	fmt.Fprintf(i.out, "\nFinalizing ...\n")
-	if err := i.finalize(); err != nil {
-		return fmt.Errorf("could not finalize plugin: %w", err)
-	}
-
-	return nil
-}
-
-func (i *Command) pluginDisplay() string {
-	if i.PluginNative != "" {
-		return fmt.Sprintf("native plugin from %q", i.PluginNative)
-	}
-
-	if i.PluginJAR != "" {
-		return fmt.Sprintf("java archive plugin from %q", i.PluginJAR)
-	}
-
-	if i.PluginNodeJS != "" {
-		return fmt.Sprintf("plugin %q from NPM registry", i.PluginNodeJS)
-	}
-
-	if i.PluginPython != "" {
-		return fmt.Sprintf("plugin %q from PyPI registry", i.PluginPython)
-	}
-
-	return "!INVALID"
+	return i.registryInstall()
 }

@@ -17,7 +17,7 @@ const (
 	Native PluginType = "native"
 	NodeJS PluginType = "nodejs"
 	Python PluginType = "python"
-	JVM    PluginType = "jvm"
+	Java   PluginType = "java"
 )
 
 type PluginIntegrity struct {
@@ -25,9 +25,16 @@ type PluginIntegrity struct {
 	Algorithm string `toml:"algorithm"`
 }
 
+type PluginSource struct {
+	Type string `toml:"type"`
+	Name string `toml:"name"`
+	URL  string `toml:"url,omitempty"`
+}
+
 type BillOfMaterials struct {
 	Name      string               `toml:"name"`
 	Type      PluginType           `toml:"type"`
+	Source    PluginSource         `toml:"source"`
 	Version   plugin.Version       `toml:"version,omitempty"`
 	Integrity *PluginIntegrity     `toml:"integrity,omitempty"`
 	Provides  []plugin.CommandInfo `toml:"provides,omitempty"`
