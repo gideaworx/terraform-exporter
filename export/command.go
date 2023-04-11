@@ -15,7 +15,7 @@ type Command struct {
 	OutputDirectory    string   `short:"o" type:"existingdir" default:"." help:"The directory to write the exported files to"`
 	SkipProviderOutput bool     `default:"false" help:"If true, do not write the provider terraform file for the plugin"`
 	CommandName        string   `arg:"" help:"The name of the command to use for export"`
-	CommandArgs        []string `arg:"" help:"The args to pass to the command" optional:"true"`
+	CommandArgs        []string `arg:"" help:"The args to pass to the command" passthrough:"true"`
 }
 
 const scriptHeader = `#!/usr/bin/env bash

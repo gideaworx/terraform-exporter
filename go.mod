@@ -6,10 +6,12 @@ require (
 	github.com/BurntSushi/toml v1.2.1
 	github.com/alecthomas/kong v0.7.1
 	github.com/blang/semver/v4 v4.0.0
+	github.com/gideaworx/terraform-exporter-plugin-registry v0.1.2
 	github.com/gideaworx/terraform-exporter-plugin/go-plugin v0.0.2-189ef87
 	github.com/hashicorp/go-hclog v1.4.0
 	github.com/hashicorp/go-plugin v1.4.9
 	github.com/olekukonko/tablewriter v0.0.5
+	gopkg.in/yaml.v3 v3.0.1
 )
 
 require (

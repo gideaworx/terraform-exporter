@@ -12,6 +12,10 @@ github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSs
 github.com/fatih/color v1.13.0/go.mod h1:kLAiJbzzSOZDVNGyDpeOxJ47H46qBXwg5ILebYFFOfk=
 github.com/fatih/color v1.14.1 h1:qfhVLaG5s+nCROl1zJsZRxFeYrHLqWroPOQ8BWiNb4w=
 github.com/fatih/color v1.14.1/go.mod h1:2oHN61fhTpgcxD3TSWCgKDiH1+x4OiDVVGH8WlgGZGg=
+github.com/gideaworx/terraform-exporter-plugin-registry v0.1.1 h1:qDPWPRJOMMxzZL9XC8YTaN6pEUSNjmqCpxMOuZH8t/I=
+github.com/gideaworx/terraform-exporter-plugin-registry v0.1.1/go.mod h1:msssA20zKe722o5LEXHibiGl2lofHNTiceNj8oax3G4=
+github.com/gideaworx/terraform-exporter-plugin-registry v0.1.2 h1:LyP+uen3+NaevIwVtyrUIVC50yv9225FK4kgZUqbXvg=
+github.com/gideaworx/terraform-exporter-plugin-registry v0.1.2/go.mod h1:msssA20zKe722o5LEXHibiGl2lofHNTiceNj8oax3G4=
 github.com/gideaworx/terraform-exporter-plugin/go-plugin v0.0.2-189ef87 h1:aAmkjnlG2vKaKEb0wQAjhJajgwyDENGd4K1OFlKXRnM=
 github.com/gideaworx/terraform-exporter-plugin/go-plugin v0.0.2-189ef87/go.mod h1:1blywgBkDigoMxdAs+QAnhyBb9j/kKQRFFAanRUgJV0=
 github.com/golang/protobuf v1.5.0/go.mod h1:FsONVRAS9T7sI+LIUmWTfcYkHO4aIWwzhcaSAoJOfIk=
@@ -74,6 +78,7 @@ google.golang.org/protobuf v1.26.0-rc.1/go.mod h1:jlhhOSvTdKEhbULTjvd4ARK9grFBp0
 google.golang.org/protobuf v1.26.0/go.mod h1:9q0QmTI4eRPtz6boOQmLYwt+qCgq0jsYwAQnmE0givc=
 google.golang.org/protobuf v1.28.1 h1:d0NfwRgPtno5B1Wa6L2DAG+KivqkdutMf1UhdNx175w=
 google.golang.org/protobuf v1.28.1/go.mod h1:HV8QOd/L58Z+nl8r43ehVNZIU/HEI6OcFqwMG9pJV4I=
+gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405 h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=
 gopkg.in/yaml.v3 v3.0.1/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=
