@@ -1,2 +1,4 @@
 terraform-exporter
 .vscode/
+
+dist/

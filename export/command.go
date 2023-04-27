@@ -1,6 +1,7 @@
 package export
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -60,7 +61,7 @@ func (c *Command) Run(ctx *kong.Context) error {
 			PluginArgs:         c.CommandArgs,
 		},
 	})
-	if err != nil {
+	if err != nil && !errors.Is(err, plugin.ErrSomeExportsFailed) {
 		return err
 	}
 

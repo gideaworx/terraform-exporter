@@ -7,7 +7,7 @@ require (
 	github.com/alecthomas/kong v0.7.1
 	github.com/blang/semver/v4 v4.0.0
 	github.com/gideaworx/terraform-exporter-plugin-registry v0.1.3
-	github.com/gideaworx/terraform-exporter-plugin/go-plugin v0.0.2-189ef87
+	github.com/gideaworx/terraform-exporter-plugin/go-plugin v0.1.0
 	github.com/hashicorp/go-hclog v1.4.0
 	github.com/hashicorp/go-plugin v1.4.9
 	github.com/olekukonko/tablewriter v0.0.5
