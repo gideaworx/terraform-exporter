@@ -82,13 +82,13 @@ func PluginHome() (string, error) {
 	}
 
 	if home, err = filepath.Abs(home); err != nil {
-		return "", fmt.Errorf("could not get absolute path of plugins directory: %w", err)
+		return "", fmt.Errorf("could not get absolute path of plugins directory %s: %w", home, err)
 	}
 
 	info, err := os.Stat(home)
 	if err != nil {
 		if !os.IsNotExist(err) {
-			return "", fmt.Errorf("could not read plugin directory: %w", err)
+			return "", fmt.Errorf("could not read plugin directory %s: %w", home, err)
 		}
 
 		if err = os.MkdirAll(home, 0o777); err != nil {
@@ -101,6 +101,33 @@ func PluginHome() (string, error) {
 	}
 
 	return home, nil
+}
+
+func PluginDir(pluginName string, create bool) (string, error) {
+	home, err := PluginHome()
+	if err != nil {
+		return "", err
+	}
+
+	pluginDir := filepath.Join(home, pluginName)
+	info, err := os.Stat(pluginDir)
+	if err != nil {
+		if !os.IsNotExist(err) {
+			return "", fmt.Errorf("could not read plugin directory %s: %w", pluginDir, err)
+		}
+
+		if create {
+			if err = os.MkdirAll(pluginDir, 0o777); err != nil {
+				return "", err
+			}
+		}
+	}
+
+	if info != nil && !info.IsDir() {
+		return "", fmt.Errorf("%q is not a directory", pluginDir)
+	}
+
+	return pluginDir, nil
 }
 
 func LoadPlugin(pluginName string, integrity *PluginIntegrity) (PluginDefinition, error) {
