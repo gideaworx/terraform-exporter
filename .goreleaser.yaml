@@ -21,9 +21,11 @@ brews:
     tap:
       owner: gideaworx
       name: homebrew-tap
+      branch: "pr/{{ .ProjectName }}-{{ .Tag }}"
       token: "{{ .Env.TAP_TOKEN }}"
       pull_request:
         enabled: true
+        base: main
     download_strategy: CurlDownloadStrategy
     folder: Formula
     url_template: "https://github.com/gideaworx/terraform-exporter/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
