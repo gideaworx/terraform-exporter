@@ -17,15 +17,16 @@ builds:
       - "-s -w -X main.Version={{ .Summary }}"
 
 brews:
-  - name: terraform-exporter@{{ .Version }}
+  - name: "terraform-exporter@{{ .Version }}"
     tap:
       owner: gideaworx
       name: homebrew-tap
+      token: "{{ .Env.TAP_TOKEN }}"
       pull_request:
         enabled: true
     download_strategy: CurlDownloadStrategy
     folder: Formula
-    url_template: https://github.com/gideaworx/terraform-exporter/releases/download/{{ .Tag }}/{{ .ArtifactName }}
+    url_template: "https://github.com/gideaworx/terraform-exporter/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
     
     commit_author:
       name: goreleaserbot
@@ -46,7 +47,9 @@ brews:
     install: |
       bin.install "terraform-exporter"
       prefix.install "LICENSE"
-
+    test: |
+      system "#{bin}/terraform-exporter --version"
+    
 release:
   draft: true
   replace_existing_draft: false
