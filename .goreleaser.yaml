@@ -17,13 +17,16 @@ builds:
       - "-s -w -X main.Version={{ .Summary }}"
 
 brews:
-  - name: terraform-exporter
+  - name: terraform-exporter@{{ .Version }}
     tap:
       owner: gideaworx
       name: homebrew-tap
       pull_request:
         enabled: true
-
+    download_strategy: CurlDownloadStrategy
+    folder: Formula
+    url_template: https://github.com/gideaworx/terraform-exporter/releases/download/{{ .Tag }}/{{ .ArtifactName }}
+    
     commit_author:
       name: goreleaserbot
       email: bot@goreleaser.com
@@ -40,6 +43,9 @@ brews:
     homepage: "https://github.com/gideaworx/terraform-exporter"
     description: Export artifacts to terraform files
     license: "MIT"
+    install: |
+      bin.install "terraform-exporter"
+      prefix.install "LICENSE"
 
 release:
   draft: true
