@@ -83,7 +83,7 @@ CLI itself and not a plugin before opening an issue.
 <!-- Links -->
 [1]: https://terraform.io
 [2]: https://plugin-registry.gideaworx.io
-[3]: /releases
+[3]: ../../releases
 [4]: https://github.com/gideaworx/terraform-exporter-plugin
 [5]: CODE_OF_CONDUCT.md
-[6]: /issues/new
+[6]: ../../issues/new
