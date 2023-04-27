@@ -17,7 +17,7 @@ builds:
       - "-s -w -X main.Version={{ .Summary }}"
 
 brews:
-  - name: "terraform-exporter@{{ .Version }}"
+  - name: "terraform-exporter" 
     tap:
       owner: gideaworx
       name: homebrew-tap
@@ -35,9 +35,9 @@ brews:
     dependencies:
       - name: nodejs
         type: optional
-      - name: python3
-        type: optional
       - name: openjdk@17
+        type: optional
+      - name: python3
         type: optional
 
     commit_msg_template: "Brew formula update for {{ .ProjectName }} version {{ .Tag }}"
@@ -48,7 +48,7 @@ brews:
       bin.install "terraform-exporter"
       prefix.install "LICENSE"
     test: |
-      system "#{bin}/terraform-exporter --version"
+      system "#{bin}/terraform-exporter", "--version"
     
 release:
   draft: true
