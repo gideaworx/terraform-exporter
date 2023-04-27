@@ -16,7 +16,7 @@ var ErrPluginAlreadyInstalled = errors.New("plugin already installed")
 type Command struct {
 	LocalFile     bool                       `short:"f" help:"If true, treat the plugin-name arg as the path to a local file"`
 	Registry      string                     `short:"r" default:"default" help:"The name of the registry to install the plugin from"`
-	PluginVersion string                     `short:"v" default:"latest" help:"The version to install from the registry. Ignored if --local-file is set"`
+	PluginVersion string                     `help:"The version to install from the registry. Ignored if --local-file is set"`
 	PluginName    string                     `arg:"" help:"The name of the plugin to install if --registry is true, or the path to the executable plugin if --local-file is set"`
 	pluginHomeDir string                     `kong:"-"`
 	out           io.Writer                  `kong:"-"`

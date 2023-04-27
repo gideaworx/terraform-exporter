@@ -5,9 +5,11 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 
 	"github.com/BurntSushi/toml"
 	"github.com/gideaworx/terraform-exporter-plugin/go-plugin"
@@ -131,12 +133,21 @@ func PluginDir(pluginName string, create bool) (string, error) {
 }
 
 func LoadPlugin(pluginName string, integrity *PluginIntegrity) (PluginDefinition, error) {
+	var executable string
+	var err error
+
 	home, err := PluginHome()
 	if err != nil {
 		return PluginDefinition{}, err
 	}
 
-	executable := filepath.Join(home, pluginName, "export-plugin")
+	executable = filepath.Join(home, pluginName, "export-plugin")
+	if strings.ContainsRune(pluginName, '/') {
+		executable, err = filepath.Abs(pluginName)
+		if err != nil {
+			return PluginDefinition{}, err
+		}
+	}
 
 	var checksum []byte
 	var sc *goplug.SecureConfig
@@ -174,7 +185,7 @@ func LoadPlugin(pluginName string, integrity *PluginIntegrity) (PluginDefinition
 		Logger: hclog.New(&hclog.LoggerOptions{
 			Name:   "plugin",
 			Level:  hclog.Debug,
-			Output: os.Stdout,
+			Output: io.Discard,
 		}),
 	})
 

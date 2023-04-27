@@ -11,6 +11,8 @@ import (
 	"github.com/gideaworx/terraform-exporter-plugin/go-plugin"
 )
 
+var ErrPluginNotFound = errors.New("plugin not found")
+
 type PluginType string
 
 const (
@@ -70,13 +72,30 @@ func FindPluginsForCommand(cmdName string) ([][2]string, error) {
 	return matching, nil
 }
 
+func LoadPluginBOM(pluginName string) (BillOfMaterials, error) {
+	boms, err := loadBoms(pluginName)
+	if err != nil {
+		return BillOfMaterials{}, err
+	}
+
+	if len(boms) == 0 {
+		return BillOfMaterials{}, ErrPluginNotFound
+	}
+
+	return boms[0], nil
+}
+
 func LoadInstalledBOMs() ([]BillOfMaterials, error) {
+	return loadBoms("*")
+}
+
+func loadBoms(dir string) ([]BillOfMaterials, error) {
 	home, err := PluginHome()
 	if err != nil {
 		return nil, err
 	}
 
-	pattern := filepath.Join(home, "*", "export-plugin.bom")
+	pattern := filepath.Join(home, dir, "export-plugin.bom")
 	matches, err := filepath.Glob(pattern)
 	if err != nil {
 		return nil, err

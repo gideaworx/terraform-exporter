@@ -1,7 +1,6 @@
 package list
 
 import (
-	"io"
 	"sort"
 	"strings"
 
@@ -13,7 +12,7 @@ import (
 type ListPluginsCommand struct {
 }
 
-func (l *ListPluginsCommand) Run(context *kong.Context, output io.Writer) error {
+func (l *ListPluginsCommand) Run(context *kong.Context) error {
 	plugins, err := runner.LoadInstalledBOMs()
 	if err != nil {
 		return err
@@ -33,11 +32,7 @@ func (l *ListPluginsCommand) Run(context *kong.Context, output io.Writer) error 
 		tableData = append(tableData, []string{p.Name, p.Version.String(), strings.Join(cmdNames, ", ")})
 	}
 
-	if output == nil {
-		output = context.Stdout
-	}
-
-	table := tablewriter.NewWriter(output)
+	table := tablewriter.NewWriter(context.Stdout)
 	table.SetHeader([]string{"Plugin", "Version", "Provided Exporters"})
 	table.SetHeaderColor(
 		tablewriter.Colors{tablewriter.Bold},

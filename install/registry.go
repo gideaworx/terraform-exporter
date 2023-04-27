@@ -37,7 +37,7 @@ func (i *Command) registryInstall() error {
 	for _, p := range reg.Plugins {
 		if p.Name == i.PluginName {
 			plugin = p
-			if strings.EqualFold(strings.TrimSpace(i.PluginVersion), "latest") {
+			if strings.EqualFold(strings.TrimSpace(i.PluginVersion), "") {
 				found = true
 				break
 			}
@@ -56,7 +56,7 @@ func (i *Command) registryInstall() error {
 		return fmt.Errorf("could not find version %q of plugin %q in registry %q", i.PluginVersion, i.PluginName, i.Registry)
 	}
 
-	if strings.EqualFold(strings.TrimSpace(i.PluginVersion), "latest") {
+	if strings.EqualFold(strings.TrimSpace(i.PluginVersion), "") {
 		sort.Slice(plugin.Versions, func(i, j int) bool {
 			si, _ := semver.ParseTolerant(plugin.Versions[i].Version)
 			sj, _ := semver.ParseTolerant(plugin.Versions[j].Version)

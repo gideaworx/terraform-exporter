@@ -2,7 +2,6 @@ package list
 
 import (
 	"fmt"
-	"io"
 	"sort"
 	"strings"
 
@@ -16,7 +15,7 @@ type ListExportersCommand struct {
 	Detailed bool   `short:"v" default:"false" help:"If set, show more detailed information about a plugin"`
 }
 
-func (l *ListExportersCommand) Run(context *kong.Context, output io.Writer) error {
+func (l *ListExportersCommand) Run(context *kong.Context) error {
 	plugins, err := runner.LoadInstalledBOMs()
 	if err != nil {
 		return err
@@ -67,11 +66,7 @@ func (l *ListExportersCommand) Run(context *kong.Context, output io.Writer) erro
 		}
 	}
 
-	if output == nil {
-		output = context.Stdout
-	}
-
-	table := tablewriter.NewWriter(output)
+	table := tablewriter.NewWriter(context.Stdout)
 	table.SetHeader(headers)
 	table.SetHeaderColor(formatters...)
 	table.SetHeaderLine(true)

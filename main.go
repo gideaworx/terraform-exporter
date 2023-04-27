@@ -11,6 +11,7 @@ import (
 	"github.com/gideaworx/terraform-exporter/list"
 	"github.com/gideaworx/terraform-exporter/registry"
 	"github.com/gideaworx/terraform-exporter/remove"
+	"github.com/gideaworx/terraform-exporter/update"
 )
 
 var Version = "0.0.0-local"
@@ -19,6 +20,7 @@ var cli struct {
 	Export        *export.Command            `cmd:"" help:"Export data to terraform files"`
 	InstallPlugin *install.Command           `cmd:"" help:"Install a plugin"`
 	RemovePlugin  *remove.Command            `cmd:"" help:"Uninstall a plugin"`
+	UpdatePlugin  *update.Command            `cmd:"" help:"Update a plugin"`
 	Help          *help.Command              `cmd:"" help:"Show help for a plugin's exporter command"`
 	ListPlugins   *list.ListPluginsCommand   `cmd:"" help:"List installed plugins"`
 	ListCommands  *list.ListExportersCommand `cmd:"" help:"List commands provided by installed plugins"`
@@ -27,7 +29,7 @@ var cli struct {
 }
 
 func main() {
-	ctx := kong.Parse(&cli, kong.BindTo(os.Stdout, (*io.Writer)(nil)), kong.BindTo(os.Stdin, (*io.Reader)(nil)), kong.Vars{
+	ctx := kong.Parse(&cli, kong.BindTo(os.Stdin, (*io.Reader)(nil)), kong.Vars{
 		"version": Version,
 	})
 

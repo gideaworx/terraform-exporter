@@ -7,6 +7,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/alecthomas/kong"
 	"github.com/gideaworx/terraform-exporter/runner"
 )
 
@@ -17,8 +18,8 @@ type Command struct {
 	in             io.Reader `kong:"-"`
 }
 
-func (c *Command) BeforeApply(stdout io.Writer, stdin io.Reader) error {
-	c.out = stdout
+func (c *Command) BeforeApply(ctx *kong.Context, stdin io.Reader) error {
+	c.out = ctx.Stdout
 	c.in = stdin
 
 	return nil
