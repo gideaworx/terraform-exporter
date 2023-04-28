@@ -12,7 +12,7 @@ import (
 
 type ListExportersCommand struct {
 	Plugin   string `short:"p" optional:"true" help:"If specified, only show the exporters for the provided plugin"`
-	Detailed bool   `short:"v" default:"false" help:"If set, show more detailed information about a plugin"`
+	Detailed bool   `short:"d" default:"false" help:"If set, show more detailed information about a plugin"`
 }
 
 func (l *ListExportersCommand) Run(context *kong.Context) error {

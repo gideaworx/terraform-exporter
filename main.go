@@ -18,12 +18,12 @@ var Version = "0.0.0-local"
 
 var cli struct {
 	Export        *export.Command            `cmd:"" help:"Export data to terraform files"`
-	InstallPlugin *install.Command           `cmd:"" help:"Install a plugin"`
-	RemovePlugin  *remove.Command            `cmd:"" help:"Uninstall a plugin"`
-	UpdatePlugin  *update.Command            `cmd:"" help:"Update a plugin"`
-	Help          *help.Command              `cmd:"" help:"Show help for a plugin's exporter command"`
-	ListPlugins   *list.ListPluginsCommand   `cmd:"" help:"List installed plugins"`
-	ListCommands  *list.ListExportersCommand `cmd:"" help:"List commands provided by installed plugins"`
+	InstallPlugin *install.Command           `cmd:"" aliases:"install,i" help:"Install a plugin"`
+	RemovePlugin  *remove.Command            `cmd:"" aliases:"remove,rm" help:"Uninstall a plugin"`
+	UpdatePlugin  *update.Command            `cmd:"" aliases:"update,up" help:"Update a plugin"`
+	Help          *help.Command              `cmd:"" aliases:"h" help:"Show help for a plugin's exporter command"`
+	ListPlugins   *list.ListPluginsCommand   `cmd:"" aliases:"ls" help:"List installed plugins"`
+	ListCommands  *list.ListExportersCommand `cmd:"" aliases:"lc" help:"List commands provided by installed plugins"`
 	Registry      *registry.Command          `cmd:"" help:"Work with plugin registries"`
 	Version       kong.VersionFlag           `short:"v" optional:"true" help:"Show the version and quit"`
 }
