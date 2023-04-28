@@ -40,6 +40,7 @@ func (l *ListExportersCommand) Run(context *kong.Context) error {
 			pluginNames = append(pluginNames, p.Name)
 			if l.Plugin == p.Name {
 				filtered = p
+				break
 			}
 		}
 
