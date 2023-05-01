@@ -1,6 +1,6 @@
 # Terraform Exporter
 
-[![Latest Release](https://img.shields.io/github/v/release/gideaworx/terraform-exporter)] [![MIT License](https://img.shields.io/github/license/gideaworx/terraform-exporter)]
+![Latest Release](https://img.shields.io/github/v/release/gideaworx/terraform-exporter) ![MIT License](https://img.shields.io/github/license/gideaworx/terraform-exporter)
 
 The `terraform-exporter` CLI is a pluggable tool that supports exporting resources
 you have already created into [Terraform HCL][1] files. Plugins determine what 
