@@ -2,7 +2,6 @@ package help
 
 import (
 	"fmt"
-	"io"
 	"strings"
 
 	"github.com/alecthomas/kong"
@@ -13,7 +12,7 @@ type Command struct {
 	CommandName string `arg:"" help:"The name of the command to use for export"`
 }
 
-func (c *Command) Run(ctx *kong.Context, output io.Writer) error {
+func (c *Command) Run(ctx *kong.Context) error {
 	matching, err := runner.FindPluginsForCommand(c.CommandName)
 	if err != nil {
 		return err
@@ -48,13 +47,9 @@ func (c *Command) Run(ctx *kong.Context, output io.Writer) error {
 		return err
 	}
 
-	if output == nil {
-		output = ctx.Stdout
-	}
-
 	helpTxt = strings.ReplaceAll(helpTxt, "\n", "\n\t")
-	fmt.Fprintf(output, "Command %s/%s Help\n\n", matching[0][0], matching[0][1])
-	fmt.Fprintln(output, helpTxt)
+	fmt.Fprintf(ctx.Stdout, "Command %s/%s Help\n\n", matching[0][0], matching[0][1])
+	fmt.Fprintln(ctx.Stdout, helpTxt)
 
 	return nil
 }
