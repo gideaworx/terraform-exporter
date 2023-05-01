@@ -1,5 +1,7 @@
 # Terraform Exporter
 
+[![Latest Release](https://img.shields.io/github/v/release/gideaworx/terraform-exporter)] [![MIT License](https://img.shields.io/github/license/gideaworx/terraform-exporter)]
+
 The `terraform-exporter` CLI is a pluggable tool that supports exporting resources
 you have already created into [Terraform HCL][1] files. Plugins determine what 
 resources should be exported and how to export them, as well as a terraform 
@@ -41,26 +43,35 @@ Commands:
   export <command-name> <command-args> ...
     Export data to terraform files
 
-  install-plugin <plugin-name>
+  install-plugin (install,i) <plugin-name>
     Install a plugin
 
-  help <command-name>
+  remove-plugin (remove,rm) <plugin-name>
+    Uninstall a plugin
+
+  update-plugin (update,up) <plugin-name>
+    Update a plugin
+
+  help (h) <command-name>
     Show help for a plugin's exporter command
 
-  list-plugins
+  list-plugins (ls)
     List installed plugins
 
-  list-commands
+  list-commands (lc)
     List commands provided by installed plugins
 
-  registry list-installed-registries
+  registry show-catalog (ls)
     List all installed plugin registries
 
-  registry list-available-plugins
+  registry available-plugins
     List all plugins available in a registry
 
-  registry add-registry
+  registry add
     Add a registry from which plugins can be installed
+
+  registry remove (rm) <name>
+    Remove a registry from the local catalog
 
 Run "terraform-exporter <command> --help" for more information on a command.
 ```
