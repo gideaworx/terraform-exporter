@@ -65,7 +65,7 @@ func (c *Command) Run(ctx *kong.Context) error {
 		return err
 	}
 
-	output, err := os.OpenFile(filepath.Join(c.OutputDirectory, "import.sh"), os.O_CREATE, 0o755)
+	output, err := os.OpenFile(filepath.Join(c.OutputDirectory, "import.sh"), os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0o755)
 	if err != nil {
 		return err
 	}

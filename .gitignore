@@ -1,4 +1,5 @@
 terraform-exporter
 .vscode/
+.envrc
 
 dist/
