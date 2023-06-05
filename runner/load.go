@@ -5,14 +5,13 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
-	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
 
 	"github.com/BurntSushi/toml"
-	"github.com/gideaworx/terraform-exporter-plugin/go-plugin"
+	plugin "github.com/gideaworx/terraform-exporter-plugin-go"
 	"github.com/hashicorp/go-hclog"
 	goplug "github.com/hashicorp/go-plugin"
 )

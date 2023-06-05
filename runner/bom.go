@@ -8,7 +8,7 @@ import (
 	"sync"
 
 	"github.com/BurntSushi/toml"
-	"github.com/gideaworx/terraform-exporter-plugin/go-plugin"
+	plugin "github.com/gideaworx/terraform-exporter-plugin-go"
 )
 
 var ErrPluginNotFound = errors.New("plugin not found")

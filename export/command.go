@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	"github.com/alecthomas/kong"
-	"github.com/gideaworx/terraform-exporter-plugin/go-plugin"
+	plugin "github.com/gideaworx/terraform-exporter-plugin-go"
 	"github.com/gideaworx/terraform-exporter/runner"
 )
 

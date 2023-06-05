@@ -3,3 +3,4 @@ terraform-exporter
 .envrc
 
 dist/
+export-test

@@ -15,8 +15,8 @@ import (
 
 	"github.com/BurntSushi/toml"
 	"github.com/blang/semver/v4"
+	plugin "github.com/gideaworx/terraform-exporter-plugin-go"
 	"github.com/gideaworx/terraform-exporter-plugin-registry/registry"
-	"github.com/gideaworx/terraform-exporter-plugin/go-plugin"
 	localreg "github.com/gideaworx/terraform-exporter/registry"
 	"github.com/gideaworx/terraform-exporter/runner"
 )
