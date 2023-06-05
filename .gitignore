@@ -4,3 +4,4 @@ terraform-exporter
 
 dist/
 export-test
+.DS_Store
