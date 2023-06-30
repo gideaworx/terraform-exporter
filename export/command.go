@@ -19,10 +19,6 @@ type Command struct {
 	CommandArgs        []string `arg:"" help:"The args to pass to the command" passthrough:"true"`
 }
 
-const scriptHeader = `#!/usr/bin/env bash
-	
-set -e`
-
 func (c *Command) Run(ctx *kong.Context) error {
 	matching, err := runner.FindPluginsForCommand(c.CommandName)
 	if err != nil {
@@ -65,15 +61,14 @@ func (c *Command) Run(ctx *kong.Context) error {
 		return err
 	}
 
-	output, err := os.OpenFile(filepath.Join(c.OutputDirectory, "import.sh"), os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0o755)
+	output, err := os.OpenFile(filepath.Join(c.OutputDirectory, "imports"), os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0o644)
 	if err != nil {
 		return err
 	}
 	defer output.Close()
 
-	fmt.Fprintln(output, scriptHeader)
 	for _, d := range response.Directives {
-		fmt.Fprintf(output, "terraform import %s.%s %s\n", d.Resource, d.Name, d.ID)
+		fmt.Fprintf(output, "%s.%s=%s\n", d.Resource, d.Name, d.ID)
 	}
 
 	return nil
